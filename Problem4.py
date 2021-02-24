@@ -1,10 +1,10 @@
-import imageio
+import imageio as im
 import numpy.fft as fft
 import numpy as np
 
-source_image = imageio.imread('test_image.jpg')
+source_image = im.imread('test_image.jpg')
 
-def HighPass2D(image, ratio, highpass=True):
+def filter2D(image, ratio, highpass=True):
 	list = []
 	new_image = np.array(list)
 	# iterate over the RGB componenets of the image
@@ -16,7 +16,7 @@ def HighPass2D(image, ratio, highpass=True):
 		dx = int(ratio * wx)
 		dy = int(ratio * wy)
 
-		# if highpass zero out low frequency regions (the corners)
+		# if highpass, zero out low frequency regions (the corners)
 		if highpass:
 			fftImage[0:dx, 0:dy] = 0 # tl
 			fftImage[0:dx, (wy-dy):wy] = 0 # tr 
@@ -44,5 +44,5 @@ def HighPass2D(image, ratio, highpass=True):
 for x in range(1,20):
 	f = x / 500
 	filename = "filtered_image_{:02d}.jpg".format(x)
-	imageio.imwrite(filename, HighPass2D(source_image, f))
+	im.imwrite(filename, filter2D(source_image, f))
 	pass

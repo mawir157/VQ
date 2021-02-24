@@ -9,14 +9,10 @@ int64_t adder(const double i1, const double i2)
 	lower += (lower % 2 != 0);
 	// round down to the nearest integer for upper bound
 	int64_t upper = std::floor(std::max(i1, i2));
-	
-	auto total = 0;
-	for (int64_t i = lower; i <= upper; i += 2)
-	{
-		total += i;
-	}
+	upper -= (upper % 2 != 0);
 
-	return total;
+	// closed form the sum of an arithmetic progression.
+	return ((upper - lower + 2) * (upper + lower)) / 4;;
 }
 
 int main (int argc, char **argv)
