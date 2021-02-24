@@ -42,22 +42,3 @@ main = do
   let list3 = linearGenerator 222527 920209 9824429
 
   putStrLn $ function1 (list1, list2, list3)
-
-  -- putStrLn . show $ sumSmallestN 50 list1
-  -- putStrLn . show $ sumSmallestN 50 list2
-  -- putStrLn . show $ sumSmallestN 50 list3
-
-
--- function1 :: Int
--- function1 = function2 exp1 exp2 exp3
---   where
---     exp1 = reallyLongFunction 1234
---     exp2 = reallyLongFunction 3151
---     exp3 = reallyLongFunction 8571
-
--- function2 :: Int -> Int -> Int -> Int
--- function2 exp1 exp2 exp3 = if exp1 < 1000
---   then exp2
---   else if exp1 < 2000
---     then exp3
---     else exp1
