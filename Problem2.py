@@ -1,4 +1,4 @@
-def strSort(s, caseSensitive=False):
+def stringFormat(s, caseSensitive=False):
 	if caseSensitive:
 		return ''.join(sorted(s))
 	else :
@@ -10,7 +10,7 @@ if len(sys.argv) == 3:
 	str1 = sys.argv[1]
 	str2 = sys.argv[2]
 
-	if strSort(str1) == strSort(str2):
+	if stringFormat(str1) == stringFormat(str2):
 		print(1)
 	else:
 		print(0)

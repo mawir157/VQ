@@ -5,13 +5,13 @@ def sumSmallestN(n, arr):
 	arr.sort()
 	return sum(arr[0:n])
 
-def function1(arr1, arr2, arr3):
+def wrapper(arr1, arr2, arr3):
 	value1 = sumSmallestN(50, arr1)
 	value2 = sumSmallestN(50, arr2)
 	value3 = sumSmallestN(50, arr3)
-	return function2(value1, value2, value3)
+	return comparer(value1, value2, value3)
 
-def function2(v1, v2, v3):
+def comparer(v1, v2, v3):
 	if v1 < 5000:
 		return "Array 1:" + str(v1)
 	elif v2 < 10000:
@@ -25,4 +25,4 @@ list1 = linearGenerator(132953, 514229, 5195977)
 list2 = linearGenerator(790879, 324469, 6860989)
 list3 = linearGenerator(222527, 920209, 9824429)
 
-print(function1(list1, list2, list3))
+print(wrapper(list1, list2, list3))

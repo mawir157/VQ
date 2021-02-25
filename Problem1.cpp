@@ -7,11 +7,12 @@ int64_t adder(const double i1, const double i2)
 	int64_t lower = std::ceil(std::min(i1, i2));
 	// ...then make sure we start summing from an even number
 	lower += (lower % 2 != 0);
-	// round down to the nearest integer for upper bound
+
+	// round down to the nearest even integer for upper bound
 	int64_t upper = std::floor(std::max(i1, i2));
 	upper -= (upper % 2 != 0);
 
-	// closed form the sum of an arithmetic progression.
+	// closed form the sum of an arithmetic progression with even steps.
 	return ((upper - lower + 2) * (upper + lower)) / 4;;
 }
 

@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
               [](const auto& i, const auto& j) { return i.second > j.second; });
 
     // make sure we don't run past the end of the vector when there are fewer
-    // than 4 distinc values
+    // than 4 distinct values
     size_t m = (zip.size() < 4) ? zip.size() : 4;
     for (size_t i = 0; i < m; ++i)
     {

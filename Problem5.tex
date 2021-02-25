@@ -1,0 +1,80 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ top=20mm,
+% bottom=0mm,
+ left=25mm,
+ right=25mm,
+ }
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[UKenglish]{babel}
+
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhf{} % sets both header and footer to nothing
+\renewcommand{\headrulewidth}{0pt}
+\newdateformat{jmtdate}{
+\THEYEAR-\twodigit{\THEMONTH}-\twodigit{\THEDAY}}
+\rfoot{Document generated:\jmtdate\today}
+
+\begin{document}
+
+\begin{LARGE}
+	\begin{center}
+		Lazy evaluation in Haskell
+	\end{center}
+\end{LARGE}
+
+\begin{Large}
+	\begin{center}
+		James Thompson
+	\end{center}
+\end{Large}
+
+By default Haskell uses lazy evaluation - this means that expressions are not evaluated until necessary, this even applies to expressions passed as arguments to functions. This can be very useful when doing tail recursion, since we do not have to evaluate anything until we reach the base step, reducing run time. The cost for this is can be increased and unpredictable memory usage.
+
+\vspace{5pt}
+In this example (\texttt{Problem5.hs}) we create 3 large lists of pseudo-random random integers (20 million elements). Then, for each list, we calculate the sum of the smallest 50 elements. Finally we print out a message depending on these sums.
+
+\noindent Haskell's lazy evaluation allows it to make two timesavings over strict languages.
+\begin{itemize}
+	\item Since the program only uses the first 50 elements of the sorted list, Haskell can bail out of the sorting algorithm as soon as those elements have been sorted, rather than having to sort the whole list. This does depend on the specific sort algorithm used, base Haskell uses quick sort (\href{https://hackage.haskell.org/package/base-4.14.1.0/docs/src/Data.OldList.html\#sort}{link}) which tends to sort from smallest to largest so this shortcut is possible.
+
+	\item The other short cut Haskell can take is in \texttt{comparer}. In this example the function exits at the first return statement so the arguments \texttt{v2} and \texttt{v3} are never evaluated, which means \texttt{value2 = sumSmallestN 50 ys} and \texttt{value3 = sumSmallestN 50 zs} are never evaluated in \texttt{wrapper}. And therefore \texttt{list2} and \texttt{list3} are never created since they are never used.
+\end{itemize}
+
+\vspace{10pt}
+For comparison we provide the equivalent code in python and C++ (\texttt{Problem5.py} and \texttt{Problem5.cpp}).  Some benchmark timing and memory usage information is shown below.
+
+\vspace{10pt}
+
+\begin{tabular}{ |p{1.5cm}|p{1.5cm}||p{1.5cm}|p{1.5cm}||p{1.5cm}|p{1.5cm}||p{1.5cm}|p{1.5cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Haskell} &
+ \multicolumn{2}{|c|}{C++} &
+ \multicolumn{2}{|c|}{C++ with -O2} &
+ \multicolumn{2}{|c|}{python}\\
+ \hline
+ time & memory & time & memory & time & memory & time & memory\\
+ \hline
+ 3,25s & 1173 MB & 22.64s & 472 MB & 4.61s & 472 MB & 26.21s & 2480 MB \\
+ \hline
+\end{tabular}
+
+\vspace{10pt}
+
+While this is not necessarily a fair comparison, it is worth noting that with the \texttt{-O2} flag the C++ code is as fast as and uses less memory than the Haskell code. gcc's optimiser has probably taken some of the same short cuts that Haskell does naturally.
+
+Haskell's large memory usage is a consequence of the purely functional nature of the language - whereas C++ and python can do the sorting in place, Haskell needs to create allocate a large amount of memory during the sorting algorithm since the original list is immutable. Recall Haskell never even created two of the three lists, so the fact is used more twice as much memory as C++, which created all three, is somewhat surprising.
+
+Lazy evaluation combined with pureness means it can often be very diffiuclt to intuit the memory usage of Haskell compare to other low-level, compiled languages like C++ or Rust.
+
+\end{document}

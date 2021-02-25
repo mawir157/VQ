@@ -28,7 +28,7 @@ uint64_t sumSmallestN(const size_t n, std::vector<uint64_t>& vec)
     return total;
 }
 
-void function2(const uint64_t v1, uint64_t v2, uint64_t v3)
+void comparer(const uint64_t v1, uint64_t v2, uint64_t v3)
 {
     if (v1 < 5000)
     {
@@ -50,7 +50,7 @@ void function2(const uint64_t v1, uint64_t v2, uint64_t v3)
     return;
 }
 
-void function1(std::vector<uint64_t>& vec1,
+void wrapper(std::vector<uint64_t>& vec1,
                std::vector<uint64_t>& vec2,
                std::vector<uint64_t>& vec3)
 {
@@ -58,7 +58,7 @@ void function1(std::vector<uint64_t>& vec1,
     auto value2 = sumSmallestN(50, vec2);
     auto value3 = sumSmallestN(50, vec3);
 
-    return function2(value1, value2, value3);
+    return comparer(value1, value2, value3);
 }
 
 int main(int argc, char *argv[])
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     auto vector2 = linearGenerator(790879, 324469, 6860989);
     auto vector3 = linearGenerator(222527, 920209, 9824429);
 
-    function1(vector1, vector2, vector3);
+    wrapper(vector1, vector2, vector3);
 
     return 0;
 }
